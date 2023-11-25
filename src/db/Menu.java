@@ -93,12 +93,39 @@ public class Menu {
         Scanner input = new Scanner(System.in);
         switch(input.nextInt()) {
             case 1:
+                System.out.println("");
+                System.out.println("Choose ordering:\n"
+                                    + "1. By ascending order\n"
+                                    + "2. By descending order");
+                System.out.print("Choose the list ordering: ");
+                int order = input.nextInt();
+                manager.ListSalespersons(order);
+                System.out.println("End of Query\n");
+                managerMenu(manager);
                 break;
             case 2:
+                System.out.println("");
+                System.out.println("Type in the lower bound for years of experience: ");
+                int lb = input.nextInt();
+                System.out.print("Type in the upper bound for years of experience: ");
+                int ub = input.nextInt();
+                manager.CountSalespersons(lb, ub);
+                System.out.println("End of Query\n");
+                managerMenu(manager);
                 break;
             case 3:
+                manager.SortListSalesValue();
+                System.out.println();
+                managerMenu(manager);
+                System.out.println("End of Query\n");
                 break;
             case 4:
+                System.out.println("");
+                System.out.println("Type in the number of parts: ");
+                int N = input.nextInt();
+                manager.ShowNPopular(N);
+                System.out.println("End of Query\n");
+                managerMenu(manager);
                 break;
         }
         
