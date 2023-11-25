@@ -17,7 +17,7 @@ public class Sales {
         
     }
     
-    void Transaction(String pID, String sID) {
+    void Transaction(int pID, int sID) {
         
     }
     

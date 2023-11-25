@@ -73,7 +73,12 @@ public class Menu {
                 salesMenu(sales);
                 break;
             case 2:
-
+                System.out.println("");
+                System.out.print("Enter the Part ID: ");
+                int pID = input.nextInt();
+                System.out.print("Enter the Salesperson ID: ");
+                int sID = input.nextInt();
+                sales.Transaction(pID, sID);
                 System.out.println("End of Query\n");
                 salesMenu(sales);
                 break;
