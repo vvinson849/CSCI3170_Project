@@ -10,6 +10,7 @@ public class Main {
     public static String dbUsername = "Group52";
     public static String dbPassword = "CSCI3170";
     
+    // Method for database connection
     public static Connection connectToMySQL(){
         
         Connection con = null;
@@ -30,11 +31,16 @@ public class Main {
     
     public static void main(String[] args) {
         
+        // Connect to the database
         Connection con = connectToMySQL();
+        
         Admin admin = new Admin(con);
         Sales sales = new Sales(con);
         Manager manager = new Manager(con);
+        
         Scanner input = new Scanner(System.in);
+        
+        // Main menu and loop of the programme
         System.out.println("Welcome to sales system!\n");
         while(true) {
             System.out.print("-----Main menu-----\n"
