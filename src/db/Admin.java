@@ -20,44 +20,44 @@ public class Admin {
 
             String createCategory = 
                 "CREATE TABLE Category(" + 
-                "cID NUMBER(10) PRIMARY KEY" + 
-                "cName CHAR(30)" +
+                "cID NUMBER(1) PRIMARY KEY UNIQUE" + 
+                "cName VARCHAR(20) NOT NULL UNIQUE" +
                 ")";
 
             String createManufacturer = 
                 "CREATE TABLE Manufacturer(" + 
-                "mID NUMBER(10) PRIMARY KEY" + 
-                "mName CHAR(30)" +
-                "mAddress CHAR(30)" + 
-                "mPhoneNumber NUMBER(10)" + 
+                "mID NUMBER(2) PRIMARY KEY UNIQUE" + 
+                "mName VARCHAR(20) NOT NULL" +
+                "mAddress CHAR(50) NOT NULL" + 
+                "mPhoneNumber NUMBER(8) NOT NULL" + 
                 ")";
 
             String createPart = 
                 "CREATE TABLE Part(" + 
-                "pID NUMBER(10) PRIMARY KEY," + 
-                "pName CHAR(30)" + 
-                "pPrice NUMBER(10)" + 
-                "FOREIGN KEY mID NUMBER(10) REFERENCES Manufacturer(mID)" +
-                "FOREIGN KEY cID NUMBER(10) REFERENCES Category(cID)" + 
-                "pWarrantyPeriod NUMBER(10)" + 
-                "pAvailableQuantity NUMBER(10)" +
+                "pID NUMBER(3) PRIMARY KEY UNIQUE," + 
+                "pName VARCHAR(20) NOT NULL" + 
+                "pPrice NUMBER(5) NOT NULL" + 
+                "FOREIGN KEY (mID) REFERENCES Manufacturer(mID)" +
+                "FOREIGN KEY (cID) REFERENCES Category(cID)" + 
+                "pWarrantyPeriod NUMBER(2) NOT NULL" + 
+                "pAvailableQuantity NUMBER(2) NOT NULL" +
                 ")";
 
             String createSalesperson = 
                 "CREATE TABLE Salesoerson(" + 
-                "sID NUMBER(10) PRIMARY KEY" + 
-                "sName CHAR(30)" +
-                "sAddress CHAR(30)" + 
-                "sPhoneNumber NUMBER(10)" + 
-                "sExperience NUMBER(10)" +
+                "sID NUMBER(2) PRIMARY KEY UNIQUE" + 
+                "sName VARCHAR(20) NOT NULL" +
+                "sAddress VARCHAR(50) NOT NULL" + 
+                "sPhoneNumber NUMBER(8) NOT NULL" + 
+                "sExperience NUMBER(1) NOT NULL" +
                 ")";
 
             String createTransaction = 
                 "CREATE TABLE Transaction(" + 
-                "tID NUMBER(10) PRIMARY KEY" +
+                "tID NUMBER(4) PRIMARY KEY UNIQUE" +
                 "tDate DATE" +
-                "FOREIGN KEY pID NUMBER(10) REFERENCES Part(pID)" +
-                "FOREIGN KEY sID NUMBER(10) REFERENCES Salesperson(sID)" +
+                "FOREIGN KEY (pID) REFERENCES Part(pID)" +
+                "FOREIGN KEY (sID) REFERENCES Salesperson(sID)" +
                 ")";
 
             stmt.executeUpdate(createCategory);
