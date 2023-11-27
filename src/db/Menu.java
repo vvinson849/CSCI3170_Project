@@ -121,8 +121,8 @@ public class Menu {
             case 3:
                 manager.SortListSalesValue();
                 System.out.println();
-                managerMenu(manager);
                 System.out.println("End of Query\n");
+                managerMenu(manager);
                 break;
             case 4:
                 System.out.println("");
