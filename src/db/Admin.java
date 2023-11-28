@@ -140,7 +140,7 @@ public class Admin {
                     String cID = rs.getString(5);
                     String pWarrantyPeriod = rs.getString(6);
                     String pAvailableQuantity = rs.getString(7);
-                    System.out.println("| " + pID + " | " + pName + " | " + pPrice + " | " + mID + " | " + cID + " | " + pWarrantyPeriod + " |");
+                    System.out.println("| " + pID + " | " + pName + " | " + pPrice + " | " + mID + " | " + cID + " | " + pAvailableQuantity + " | " + pWarrantyPeriod + " |");
                 }
             } else if(tableName.equalsIgnoreCase("salesperson")) {
                 ResultSet rs = stmt.executeQuery("SELECT * FROM Salesperson");
