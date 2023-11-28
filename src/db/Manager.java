@@ -34,8 +34,18 @@ public class Manager {
         }
     }
     
-    void CountSalespersons(int lb, int ub) {
-        
+    void CountSalesperson(int lb, int ub) {
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT S.sID, S.sName, S.sExperience, COUNT(*) AS noOfTransaction "
+                                           + "FROM Salesperson S, Transaction T "
+                                           + "WHERE S.sID=T.sID "
+                                           + "GROUP BY S.sID "
+                                           + "ORDER BY S.sID DESC");
+        } catch(Exception e) {
+            System.err.println(e);
+            System.err.println("Count Salesperson");
+        }
     }
     
     void SortListSalesValue() {
