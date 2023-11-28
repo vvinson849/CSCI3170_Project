@@ -15,15 +15,15 @@ public class Main {
         
         Connection con = null;
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection(dbAddress, dbUsername, dbPassword);
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection(dbAddress, dbUsername, dbPassword);
         } 
         catch (ClassNotFoundException e){
-            System.out.println("[Error]: Java MySQL DB Driver not found!!");
-            System.exit(0);
+                System.out.println("[Error]: Java MySQL DB Driver not found!!");
+                System.exit(0);
         } 
         catch (SQLException e){
-            System.out.println(e);
+                System.out.println(e);
         }
         return con;
         
@@ -44,11 +44,11 @@ public class Main {
         System.out.println("Welcome to sales system!\n");
         while(true) {
             System.out.print("-----Main menu-----\n"
-                           + "What kind of operation would you like to perform?\n"
-                           + "1. Operations for administrator\n2"
-                           + "2. Operations for salesperson\n"
-                           + "3. Operations for manager\n"
-                           + "4. Exit this program\n");
+                       + "What kind of operation would you like to perform?\n"
+                       + "1. Operations for administrator\n2"
+                       + "2. Operations for salesperson\n"
+                       + "3. Operations for manager\n"
+                       + "4. Exit this program\n");
             System.out.print("Enter Your Choice: ");
             switch(input.nextInt()) {
             case 1:

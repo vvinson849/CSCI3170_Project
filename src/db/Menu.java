@@ -114,7 +114,7 @@ public class Menu {
                 int lb = input.nextInt();
                 System.out.print("Type in the upper bound for years of experience: ");
                 int ub = input.nextInt();
-                manager.CountSalesperson(lb, ub);
+                manager.CountSalespersons(lb, ub);
                 System.out.println("End of Query\n");
                 managerMenu(manager);
                 break;
