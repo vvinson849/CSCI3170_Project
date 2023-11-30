@@ -75,12 +75,29 @@ public class Manager {
         } catch(Exception e) {
             System.err.println(e);
             System.err.println("Sort and list manufacturer failed");
-        }
-        
+        } 
     }
     
     void ShowNPopular(int N) {
-        
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT P.pID, P.pName, COUNT(tID) "
+                                           + "FROM Part P "
+                                           + "JOIN Transaction ON Transaction.pID = P.pID"
+                                           + "GROUP BY P.pID, P.pName "
+                                           + "ORDER BY COUNT(tID) DESC"
+                                           + "LIMIT " + N);
+            System.out.println("| Part ID | Part Name | No. of Transaction |");
+            while(rs.next()) {
+                String pID = rs.getString(1);
+                String pName = rs.getString(2);
+                String noT = rs.getString(3);
+                System.out.println("| " + pID + " | " + pName + " | " + noT + " | ");
+            }
+        } catch(Exception e) {
+            System.err.println(e);
+            System.err.println("Show popular parts failed");
+        }
     }
     
 }
