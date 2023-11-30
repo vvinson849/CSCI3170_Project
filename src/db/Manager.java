@@ -52,11 +52,30 @@ public class Manager {
             }
         } catch(Exception e) {
             System.err.println(e);
-            System.err.println("Count Salesperson");
+            System.err.println("Count Salesperson Failed");
         }
     }
     
     void SortListSalesValue() {
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT M.mID, M.mName, SUM(pPrice) AS SRevenue "
+                                           + "FROM Manufacturer M "
+                                           + "JOIN Part ON Part.mID = M.mID"
+                                           + "JOIN Transaction ON Transaction.pID = Part.pID "
+                                           + "GROUP BY M.mID, M.mName "
+                                           + "ORDER BY SUM(pPrice) DESC");
+            System.out.println("| Manufacturer ID | Manufacturer Name | Total Sales Value |");
+            while(rs.next()) {
+                String mID = rs.getString(1);
+                String mName = rs.getString(2);
+                String sValue = rs.getString(3);
+                System.out.println("| " + mID + " | " + mName + " | " + sValue + " | ");
+            }
+        } catch(Exception e) {
+            System.err.println(e);
+            System.err.println("Sort and list manufacturer failed");
+        }
         
     }
     
