@@ -42,6 +42,14 @@ public class Manager {
                                            + "WHERE S.sID=T.sID "
                                            + "GROUP BY S.sID "
                                            + "ORDER BY S.sID DESC");
+            System.out.println("| sID | sName | Years of Experience | Number of Transaction |");
+            while(rs.next()) {
+                String sID = rs.getString(1);
+                String sName = rs.getString(2);
+                String sExperience = rs.getString(3);
+                String noT = rs.getString(4);
+                System.out.println("| " + sID + " | " + sName + " | " + sExperience + " | " + noT + " | ");
+            }
         } catch(Exception e) {
             System.err.println(e);
             System.err.println("Count Salesperson");
