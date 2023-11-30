@@ -44,7 +44,7 @@ public class Admin {
                 ")";
 
             String createSalesperson = 
-                "CREATE TABLE Salesoerson(" + 
+                "CREATE TABLE Salesperson(" + 
                 "sID NUMBER(2) PRIMARY KEY UNIQUE" + 
                 "sName VARCHAR(20) NOT NULL" +
                 "sAddress VARCHAR(50) NOT NULL" + 
