@@ -45,7 +45,7 @@ public class Main {
         while(true) {
             System.out.print("-----Main menu-----\n"
                            + "What kind of operation would you like to perform?\n"
-                           + "1. Operations for administrator\n2"
+                           + "1. Operations for administrator\n"
                            + "2. Operations for salesperson\n"
                            + "3. Operations for manager\n"
                            + "4. Exit this program\n");
