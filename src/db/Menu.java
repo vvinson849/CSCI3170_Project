@@ -64,7 +64,8 @@ public class Menu {
                 System.out.print("Choose the search criterion: ");
                 int crit = input.nextInt();
                 System.out.print("Type the Search Keyword: ");
-                String keyword = input.nextLine();
+                Scanner kw = new Scanner(System.in);
+                String keyword = kw.nextLine();
                 System.out.println("Choose ordering:\n"
                                  + "1. By price, ascending order\n"
                                  + "2. By price, descending order");

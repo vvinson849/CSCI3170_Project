@@ -20,7 +20,7 @@ public class Sales {
                                            + "FROM Part P, Manufacturer M, Category C "
                                            + "WHERE P.mID=M.mID AND P.cID=C.cID AND "
                                            + (crit==1?"P.pName=":"M.mName=")
-                                           + keyword + " ORDER BY P.pPrice "
+                                           + "'" + keyword + "'" + " ORDER BY P.pPrice "
                                            + (order==1?"ASC":"DESC"));
             System.out.println("| ID | Name | Manufacturer | Category | Quantity | Warranty | Price |");
             while(rs.next()) {
