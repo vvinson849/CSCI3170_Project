@@ -45,28 +45,56 @@ public class Sales {
     void Transaction(int pID, int sID) {
         try {
             // Check if out of stock
+            int quant = -1;
+            String name = null;
+            int pd;
+            int sd;
             Statement stmt = conn.createStatement();
+
+            ResultSet rs2 = stmt.executeQuery("SELECT MAX(pID), MAX(sID) FROM Part, Salesperson");
+            if(rs2.next()){
+                pd = rs2.getInt(1);
+                sd = rs2.getInt(2);
+
+                if(pID > pd) {
+                System.out.println("part ID not exist!");
+                return;
+                }
+                if(sID > sd){
+                System.out.println("salesperson ID not exist!");
+                return;
+                }
+            }
+
             ResultSet rs = stmt.executeQuery("SELECT pName, pAvailableQuantity FROM Part WHERE pID=" + pID);
-            int quant = rs.getInt("pAvailableQuantity");
-            if(quant < 1) {
+            if(rs.next()){
+                name = rs.getString(1);
+                quant = rs.getInt(2);
+
+                if(quant < 1) {
                 System.out.println("[ERROR] Out of Stock!");
                 return;
+                }
             }
             
             // Get the transaction ID
-            rs = stmt.executeQuery("SELECT COUNT(*) FROM Transaction");
-            int tID = rs.getInt(1) + 1;
+            ResultSet rs1 = stmt.executeQuery("SELECT COUNT(*) FROM Transaction");
+            int tID = -1;
+            if(rs1.next()){
+                tID = rs1.getInt(1);
+            }
+            tID = tID + 1;
             
             // Insert a record to Transaction table
             Date date = new Date();
-            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             String dnow = df.format(date);
             stmt.executeUpdate("INSERT INTO Transaction(tID, tDate, pID, sID) "
-                             + "VALUES(" + tID + dnow + pID + sID + ")");
+                             + "VALUES(" + tID + ",'" + dnow + "'," + pID + "," + sID + ")");
             
             // Update the quantity in Part table
-            stmt.executeUpdate("Update Part SET pAvailableQuantity=" + (quant-1) + "WHERE pID=" + pID);
-            System.out.println("Product: " + rs.getString("pName")
+            stmt.executeUpdate("Update Part SET pAvailableQuantity=" + (quant-1) + " WHERE pID=" + pID);
+            System.out.println("Product: " + name 
                              + "(id: " + pID + ") "
                              + "Remaining Quantity: " + (quant-1));
             
