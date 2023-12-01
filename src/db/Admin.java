@@ -91,11 +91,12 @@ public class Admin {
             String deleteSalesperson = "DROP TABLE Salesperson";
             String deleteTransaction = "DROP TABLE Transaction";
 
+            stmt.executeUpdate(deleteTransaction);
+            stmt.executeUpdate(deletePart);
             stmt.executeUpdate(deleteCategory);
             stmt.executeUpdate(deleteManufacturer);
-            stmt.executeUpdate(deletePart);
             stmt.executeUpdate(deleteSalesperson);
-            stmt.executeUpdate(deleteTransaction);
+
 
             System.out.print("Processing...Done! Database is removed!");
 
