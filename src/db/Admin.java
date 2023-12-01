@@ -110,36 +110,38 @@ public class Admin {
     
     void LoadData() {
         try{
+            Statement stmt = conn.createStatement();
             String thisLine;
             Scanner input = new Scanner(System.in);
             System.out.println("Type in the Source Data Folder Path: ");
             String folderName = input.nextLine();
 
             BufferedReader br = null;
-            br = new BufferedReader(new FileReader("/"+folderName+"category.txt"));
+            br = new BufferedReader(new FileReader(folderName+"/category.txt"));
             while((thisLine = br.readLine()) != null){
-                String[] splited = thisLine.split("\\ ",3);
+                String[] splited = null;
+                splited = thisLine.split("\t",10);
                 String a = splited[0];
                 String b = splited[1];
-                Statement stmt = conn.createStatement();
-                stmt.executeQuery("INSERT INTO Category VALUES(" + a + "," + b + ")");
+                stmt.executeUpdate("INSERT INTO Category VALUES(" + a + ",'" + b + "')");
 
             }
             BufferedReader br1 = null;
-            br1 = new BufferedReader(new FileReader("/"+folderName+"manufacturer.txt"));
+            br1 = new BufferedReader(new FileReader(folderName+"/manufacturer.txt"));
             while((thisLine = br1.readLine()) != null){
-                String[] splited = thisLine.split("\\ ",10);
+                String[] splited = null;
+                splited = thisLine.split("\t",10);
                 String a = splited[0];
                 String b = splited[1];
                 String c = splited[2];
                 String d = splited[3];
-                Statement stmt = conn.createStatement();
-                stmt.executeQuery("INSERT INTO Manufacturer VALUES(" + a + "," + b + "," + c + "," + d + ")");
+                stmt.executeUpdate("INSERT INTO Manufacturer VALUES(" + a + ",'" + b + "','" + c + "'," + d + ")");
             }
             BufferedReader br2 = null;
-            br2 = new BufferedReader(new FileReader("/"+folderName+"part.txt"));
+            br2 = new BufferedReader(new FileReader(folderName+"/part.txt"));
             while((thisLine = br2.readLine()) != null){
-                String[] splited = thisLine.split("\\ ",10);
+                String[] splited = null;
+                splited = thisLine.split("\t",10);
                 String a = splited[0];
                 String b = splited[1];
                 String c = splited[2];
@@ -147,31 +149,40 @@ public class Admin {
                 String e = splited[4];
                 String f = splited[5];
                 String g = splited[6];
-                Statement stmt = conn.createStatement();
-                stmt.executeQuery("INSERT INTO Part VALUES(" + a + "," + b + "," + c + "," + d + "," + e + "," + f + "," + g + ")");
+                stmt.executeUpdate("INSERT INTO Part VALUES(" + a + ",'" + b + "'," + c + "," + d + "," + e + "," + f + "," + g + ")");
             }
             BufferedReader br3 = null;
-            br3 = new BufferedReader(new FileReader("/"+folderName+"salesperson.txt"));
+            br3 = new BufferedReader(new FileReader(folderName+"/salesperson.txt"));
             while((thisLine = br3.readLine()) != null){
-                String[] splited = thisLine.split("\\ ",10);
+                String[] splited = null;
+                splited = thisLine.split("\t",10);
                 String a = splited[0];
                 String b = splited[1];
                 String c = splited[2];
                 String d = splited[3];
-                Statement stmt = conn.createStatement();
-                stmt.executeQuery("INSERT INTO Salesperson VALUES(" + a + "," + b + "," + c + "," + d + ")");
+                String e = splited[4];
+                stmt.executeUpdate("INSERT INTO Salesperson VALUES(" + a + ",'" + b + "','" + c + "'," + d + "," + e + ")");
             }
             BufferedReader br4 = null;
-            br4 = new BufferedReader(new FileReader("/"+folderName+"manufacturer.txt"));
+            br4 = new BufferedReader(new FileReader(folderName+"/transaction.txt"));
             while((thisLine = br4.readLine()) != null){
-                String[] splited = thisLine.split("\\ ",10);
+                String[] splited = null;
+                splited = thisLine.split("\t",10);
                 String a = splited[0];
                 String b = splited[1];
                 String c = splited[2];
                 String d = splited[3];
-                Statement stmt = conn.createStatement();
-                stmt.executeQuery("INSERT INTO Transaction VALUES(" + a + "," + b + "," + c + "," + d + ")");
+
+                String[] spd = null;
+                spd = d.split("/", 4);
+                String day = spd[0];
+                String month = spd[1];
+                String year = spd[2];
+                String dt = "'" +  year + "-" + month + "-" + day + "'";
+
+                stmt.executeUpdate("INSERT INTO Transaction VALUES(" + a + "," + dt + "," + b + "," + c + ")");
             }
+            System.out.print("Processing...Done! Data is inputted to the database!");
         } 
         catch(Exception e) {
             System.err.println(e);
@@ -186,15 +197,15 @@ public class Admin {
         try {
             Statement stmt = conn.createStatement();
             if(tableName.equalsIgnoreCase("category")) {
-                ResultSet rs = stmt.executeQuery("SELECT * FROM Category");
+                ResultSet rs = stmt.executeQuery("SELECT * FROM Category ORDER BY cID");
                 System.out.println("Content of table category:\n| cID | cName |");
                 while(rs.next()) {
                     String cID = rs.getString(1);
                     String cName = rs.getString(2);
                     System.out.println("| " + cID + " | " + cName + " |");
                 }
-            } else if(tableName.equalsIgnoreCase("maufacturer")) {
-                ResultSet rs = stmt.executeQuery("SELECT * FROM Manufacturer");
+            } else if(tableName.equalsIgnoreCase("manufacturer")) {
+                ResultSet rs = stmt.executeQuery("SELECT * FROM Manufacturer ORDER BY mID");
                 System.out.println("Content of table manufacturer:\n| mID | mName | mAddress | mPhoneNumber |");
                 while(rs.next()) {
                     String mID = rs.getString(1);
@@ -204,7 +215,7 @@ public class Admin {
                     System.out.println("| " + mID + " | " + mName + " | " + mAddress + " | " + mPhoneNumber + " |");
                 }
             } else if(tableName.equalsIgnoreCase("part")) {
-                ResultSet rs = stmt.executeQuery("SELECT * FROM Part");
+                ResultSet rs = stmt.executeQuery("SELECT * FROM Part ORDER BY pID");
                 System.out.println("Content of table part:\n| p_id | p_Name | p_price | m_id | p_quantity | p_warranty |");
                 while(rs.next()) {
                     String pID = rs.getString(1);
@@ -217,7 +228,7 @@ public class Admin {
                     System.out.println("| " + pID + " | " + pName + " | " + pPrice + " | " + mID + " | " + cID + " | " + pAvailableQuantity + " | " + pWarrantyPeriod + " |");
                 }
             } else if(tableName.equalsIgnoreCase("salesperson")) {
-                ResultSet rs = stmt.executeQuery("SELECT * FROM Salesperson");
+                ResultSet rs = stmt.executeQuery("SELECT * FROM Salesperson ORDER BY sID");
                 System.out.println("Content of table salesperson:\n| sID | sName | sAddress | sPhoneNumber | sExperience |");
                 while(rs.next()) {
                     String sID = rs.getString(1);
@@ -228,7 +239,7 @@ public class Admin {
                     System.out.println("| " + sID + " | " + sName + " | " + sAddress + " | " + sPhoneNumber + " | " + sExperience + " |");
                 }
             } else if(tableName.equalsIgnoreCase("transaction")) {
-                ResultSet rs = stmt.executeQuery("SELECT * FROM Transaction");
+                ResultSet rs = stmt.executeQuery("SELECT * FROM Transaction ORDER BY tID");
                 System.out.println("Content of table transaction:\n| tID | tDate | pID | sID |");
                 while(rs.next()) {
                     String tID = rs.getString(1);

@@ -36,7 +36,9 @@ public class Menu {
                 break;
             case 4:
                 System.out.print("Which table would you like to show: ");
-                admin.ShowTable(input.nextLine());
+                Scanner tb = new Scanner(System.in);
+                String choice = tb.nextLine();
+                admin.ShowTable(choice);
                 System.out.println("End of Query\n");
                 adminMenu(admin);
                 break;
