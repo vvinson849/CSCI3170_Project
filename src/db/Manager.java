@@ -16,7 +16,7 @@ public class Manager {
     void ListSalespersons(int order) { // value of order: 1 for ascendent, 2 for decendent
         try {
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM Salesperson OEDER BY sExperience " + (order==1?"ASC":"DESC"));
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Salesperson ORDER BY sExperience " + (order==1?"ASC":"DESC"));
             System.out.println("| sID | sName | sAddress | sPhoneNumber | sExperience |");
             while(rs.next()) {
                 String sID = rs.getString(1);
@@ -39,8 +39,8 @@ public class Manager {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT S.sID, S.sName, S.sExperience, COUNT(*) AS noOfTransaction "
                                            + "FROM Salesperson S, Transaction T "
-                                           + "WHERE S.sID=T.sID "
-                                           + "GROUP BY S.sID "
+                                           + "WHERE S.sID=T.sID AND S.sExperience >=" + lb + " AND S.sExperience <=" + ub + " "
+                                           + "GROUP BY S.sID, S.sName "
                                            + "ORDER BY S.sID DESC");
             System.out.println("| sID | sName | Years of Experience | Number of Transaction |");
             while(rs.next()) {
@@ -61,7 +61,7 @@ public class Manager {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT M.mID, M.mName, SUM(pPrice) AS SRevenue "
                                            + "FROM Manufacturer M "
-                                           + "JOIN Part ON Part.mID = M.mID"
+                                           + "JOIN Part ON Part.mID = M.mID "
                                            + "JOIN Transaction ON Transaction.pID = Part.pID "
                                            + "GROUP BY M.mID, M.mName "
                                            + "ORDER BY SUM(pPrice) DESC");
@@ -83,9 +83,9 @@ public class Manager {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT P.pID, P.pName, COUNT(tID) "
                                            + "FROM Part P "
-                                           + "JOIN Transaction ON Transaction.pID = P.pID"
+                                           + "JOIN Transaction ON Transaction.pID = P.pID "
                                            + "GROUP BY P.pID, P.pName "
-                                           + "ORDER BY COUNT(tID) DESC"
+                                           + "ORDER BY COUNT(tID) DESC "
                                            + "LIMIT " + N);
             System.out.println("| Part ID | Part Name | No. of Transaction |");
             while(rs.next()) {
