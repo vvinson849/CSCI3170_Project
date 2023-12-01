@@ -16,15 +16,14 @@ public class Manager {
     void ListSalespersons(int order) { // value of order: 1 for ascendent, 2 for decendent
         try {
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM Salesperson ORDER BY sExperience " + (order==1?"ASC":"DESC"));
-            System.out.println("| sID | sName | sAddress | sPhoneNumber | sExperience |");
+            ResultSet rs = stmt.executeQuery("SELECT sID, sName, sPhoneNumber, sExperience FROM Salesperson ORDER BY sExperience " + (order==1?"ASC":"DESC"));
+            System.out.println("| ID | Name | Mobile Number | Years of Experience |");
             while(rs.next()) {
                 String sID = rs.getString(1);
                 String sName = rs.getString(2);
-                String sAddress = rs.getString(3);
-                String sPhoneNumber = rs.getString(4);
-                String sExperience = rs.getString(5);
-                System.out.println("| " + sID + " | " + sName + " | " + sAddress + " | " + sPhoneNumber + " | " + sExperience + " |");
+                String sPhoneNumber = rs.getString(3);
+                String sExperience = rs.getString(4);
+                System.out.println("| " + sID + " | " + sName + " | " + sPhoneNumber + " | " + sExperience + " |");
             }
             
         } catch(Exception e) {
@@ -42,7 +41,7 @@ public class Manager {
                                            + "WHERE S.sID=T.sID AND S.sExperience >=" + lb + " AND S.sExperience <=" + ub + " "
                                            + "GROUP BY S.sID, S.sName "
                                            + "ORDER BY S.sID DESC");
-            System.out.println("| sID | sName | Years of Experience | Number of Transaction |");
+            System.out.println("| ID | Name | Years of Experience | Number of Transaction |");
             while(rs.next()) {
                 String sID = rs.getString(1);
                 String sName = rs.getString(2);
